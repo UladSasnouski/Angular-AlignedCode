@@ -22,7 +22,7 @@ export class UserComponent implements OnInit {
   };
 
   private getUser(): void {
-    if (localStorage.getItem('auth_token')) {
+    if (this.authService.isAuthorized()) {
       this.authService.getUser().subscribe((resp: any) => {
         this.isAuthorized = true;
         this.setName(resp.firstName, resp.lastName);

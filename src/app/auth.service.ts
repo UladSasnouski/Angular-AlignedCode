@@ -18,11 +18,16 @@ interface User {
 })
 export class AuthService {
 
+  private token: string | null = null
+
   constructor(private http: HttpClient, private router: Router) { };
 
   login(name: string, password: string): Observable<User> {
     return this.http.post<User>('/api/login', { username: name, password: password }).pipe(
-      tap(token => localStorage.setItem('auth_token', token.tokens.acessToken))
+      tap(token => {
+        localStorage.setItem('auth_token', token.tokens.acessToken);
+        this.setToken(token.tokens.acessToken);
+      })
     );
   };
   register(name: string, password: string, first: string, last: string): Observable<User> {
@@ -30,8 +35,18 @@ export class AuthService {
   };
   logout() {
     localStorage.removeItem('auth_token');
+    this.setToken(null);
   };
   getUser(): Observable<User> {
     return this.http.get<User>('/api/user', { headers: { Authorization: `Bearer ${localStorage.getItem('auth_token')}` } });
   };
+  setToken(token: string | null) {
+    this.token = token
+  }
+  getToken(): string {
+    return this.token!
+  }
+  isAuthorized(): boolean {
+    return !!this.token
+  }
 };
