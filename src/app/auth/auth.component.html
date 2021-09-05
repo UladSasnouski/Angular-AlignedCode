@@ -1,0 +1,23 @@
+<div class="box">
+  <form [formGroup]="reactiveForm" (submit)="onSubmit()">
+    <span class="text-center">Login</span>
+    <div class="input-container">
+      <input type="text" id="name" formControlName="name" />
+      <label>Name</label>
+      <div class="error" *ngIf="isControlInvalid('name')">
+        <p>Invalid name</p>
+      </div>
+    </div>
+    <div class="input-container">
+      <input type="password" id="password" formControlName="password" maxlength="32" required />
+      <label>Password</label>
+      <div class="error" *ngIf="isControlInvalid('password')">
+        <p>Invalid password</p>
+      </div>
+    </div>
+    <div class="button-container">
+      <button type="submit" class="btn">Submit</button>
+    </div>
+    <p class="error">{{error}}</p>
+  </form>
+</div>

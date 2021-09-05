@@ -1,0 +1,11 @@
+<div class="box" *ngIf="isAuthorized">
+  <h1 class="text-center">Whoa!</h1>
+  <h2 class="text-center-name">{{getName().first}} {{getName().last}}</h2>
+  <h2 class="text-center">You did it!</h2>
+  <div class=" button-container">
+    <button type="button" class="btn" (click)="onLogout()">Logout</button>
+  </div>
+</div>
+<div class="box" *ngIf="!isAuthorized">
+  <h1 class="text-center">{{error}}</h1>
+</div>
